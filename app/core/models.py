@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 from django.conf import settings
-import email
 
 
 class UserManager(BaseUserManager):
@@ -28,6 +27,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     """return None
     Custome user model that supports using email instead of email
@@ -40,7 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    
+
 
 class Tag(models.Model):
     """Tag to be used for a recipe"""
@@ -49,22 +49,21 @@ class Tag(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
-    
-    def __str__(self):
-        """returns the name"""
-        return self.name
-    
-class Ingredient(models.Model):
-    """Ingredient to be used in a recipe"""
-    
-    name = models.CharField(max_length=255)
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete = models.CASCADE
-    )
- 
 
     def __str__(self):
         """returns the name"""
         return self.name
-     
+
+
+class Ingredient(models.Model):
+    """Ingredient to be used in a recipe"""
+
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        """returns the name"""
+        return self.name
