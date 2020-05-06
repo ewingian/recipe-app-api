@@ -57,9 +57,29 @@ class PrivateIngredientsApiTests(TestCase):
             'password2'
         )
         Ingredient.objects.create(user=user2, name='Vinegar')
-        Ingredient.objects.create(user=self.user, name='Garlic')
+        ingredient = Ingredient.objects.create(user=self.user, name='Garlic')
 
         resp = self.client.get(INGREDIENTS_URL)
 
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         self.assertEqual(len(resp.data), 1)
+        self.assertEqual(resp.data[0]['name'], ingredient.name)
+
+    def test_create_ingredient_successful(self):
+        """Test create a new ingredient"""
+        payload = {'name': 'Cabbage'}
+        resp = self.client.post(INGREDIENTS_URL, payload)
+        print(resp)
+        exists = Ingredient.objects.filter(
+            user=self.user,
+            name=payload['name'],
+        ).exists()
+        self.assertTrue(exists)
+
+    def test_create_ingredient_invalid(self):
+        """Test creating invalid ingredient fails"""
+        payload = {'name': ''}
+        resp = self.client.post(INGREDIENTS_URL, payload)
+        self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
+
+

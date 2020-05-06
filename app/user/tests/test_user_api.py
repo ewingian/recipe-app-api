@@ -133,6 +133,8 @@ class PrivateUserApiTests(TestCase):
         """test that POST is not allowed on the manage_user_url"""
         resp = self.client.post(MANAGE_USER_URL)
 
+        self.assertEquals(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
     def test_update_user_profile(self):
         """Test updating the user profile for authenticated user"""
         payload = {
