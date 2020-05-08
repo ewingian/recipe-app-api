@@ -70,6 +70,7 @@ class PrivateIngredientsApiTests(TestCase):
         payload = {'name': 'Cabbage'}
         resp = self.client.post(INGREDIENTS_URL, payload)
         print(resp)
+        print(Ingredient.objects.all())
         exists = Ingredient.objects.filter(
             user=self.user,
             name=payload['name'],
