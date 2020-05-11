@@ -18,7 +18,8 @@ class CommandTests(TestCase):
     # as part of the function call
     @patch('time.sleep', return_value=True)
     def test_wait_for_db(self, ts):
-        """Test waiting for db Check to see if ConnectionHandler raises an operation error"""
+        """Test waiting for db Check to see if
+        ConnectionHandler raises an operation error"""
         with patch('django.db.utils.ConnectionHandler.__getitem__') as gi:
             # first 5 times the error is raised. 6th time is true
             gi.side_effect = [OperationalError] * 5 + [True]
