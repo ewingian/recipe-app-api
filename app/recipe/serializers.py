@@ -44,6 +44,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         )
         read_only_fields = ('id',)
 
+
 # makes use of a nested serializer
 class RecipeDetailSerializer(RecipeSerializer):
     """Serialize a recipe detail"""
